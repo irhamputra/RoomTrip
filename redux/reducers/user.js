@@ -9,11 +9,17 @@ export const user = (state = {}, action) => {
         case 'LOGOUT':
             return (state = {});
 
-        case 'UPDATE_EMAIL':
-            return { ...state, email: action.payload };
-
         case 'UPDATE_NAME':
             return { ...state, name: action.payload };
+
+        case 'UPDATE_PAYPAL':
+            return { ...state, paypal: action.payload };
+
+        case 'SAVE_PAYPAL':
+            return state;
+
+        case 'UPDATE_EMAIL':
+            return { ...state, email: action.payload };
 
         case 'UPDATE_PASSWORD':
             return { ...state, password: action.payload };

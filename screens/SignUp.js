@@ -44,6 +44,7 @@ const SignUp = ({ navigation }) => {
                 label="Email"
                 containerStyle={{ marginBottom: 10 }}
                 value={email}
+                autoCorrect={false}
                 autoCapitalize="none"
                 placeholder="Your email here"
                 onChangeText={e => dispatchEmail(e)}

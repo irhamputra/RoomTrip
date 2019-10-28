@@ -14,6 +14,30 @@ export const updateName = fullName => {
     return { type: 'UPDATE_NAME', payload: fullName };
 };
 
+export const updatePayPal = paypalMail => {
+    return { type: 'UPDATE_PAYPAL', payload: paypalMail };
+};
+
+export const savePayPal = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { paypal, uid } = getState().user;
+
+            const res = await db
+                .collection('users')
+                .doc(uid)
+                .update({
+                    paypal
+                });
+
+            console.log(res);
+            dispatch({ type: 'SAVE_PAYPAL' });
+        } catch (e) {
+            alert(e);
+        }
+    };
+};
+
 const _storeData = async token => {
     try {
         await AsyncStorage.setItem('token', `${token}`);
@@ -29,8 +53,13 @@ export const getUser = uid => {
                 .collection('users')
                 .doc(uid)
                 .get();
-            dispatch({ type: 'GET_USER', payload: user.data() });
-        } catch (e) {}
+            const documentSnapshot = user.exists;
+            if (documentSnapshot) {
+                dispatch({ type: 'GET_USER', payload: user.data() });
+            }
+        } catch (e) {
+            alert('User not found');
+        }
     };
 };
 
@@ -63,7 +92,9 @@ export const signUp = () => {
                     token: res.user.refreshToken,
                     email,
                     photoURL: '',
-                    name
+                    name,
+                    phoneNumber: null,
+                    paypal: null
                 };
 
                 db.collection('users')
