@@ -1,12 +1,12 @@
-import React from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Input, Button } from 'react-native-elements';
-import { styles } from './Home';
+import { Input, Button, Text, CheckBox } from 'react-native-elements';
 import { updateEmail, updatePassword, signUp, updateName } from '../redux/actions/user';
 
 const SignUp = ({ navigation }) => {
-    const { email, password, fullName } = useSelector(state => state.user);
+    const [check, setCheck] = useState(false);
+    const { email, password, name } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const dispatchFullName = fullName => dispatch(updateName(fullName));
     const dispatchEmail = email => dispatch(updateEmail(email));
@@ -17,17 +17,24 @@ const SignUp = ({ navigation }) => {
         if (email && password && name) {
             dispatchSignUp();
             navigation.navigate('Home');
+        } else {
+            alert('You must fill all required fields');
         }
-
-        alert('You must fill all required fields');
     };
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <KeyboardAvoidingView
+            style={{ marginHorizontal: 30, justifyContent: 'center', alignItems: 'center', flex: 1 }}
+            behavior="padding"
+            enabled
+        >
+            <Text h2 h2Style={{ fontWeight: 'bold', marginVertical: 20 }}>
+                Register
+            </Text>
             <Input
                 containerStyle={{ marginBottom: 10 }}
                 label="Full Name"
-                value={fullName}
+                value={name}
                 autoCorrect={false}
                 placeholder="Your email here"
                 onChangeText={e => dispatchFullName(e)}
@@ -43,7 +50,7 @@ const SignUp = ({ navigation }) => {
             />
 
             <Input
-                containerStyle={{ marginBottom: 10 }}
+                containerStyle={{ marginBottom: 20 }}
                 label="Password"
                 value={password}
                 autoCapitalize="none"
@@ -52,7 +59,27 @@ const SignUp = ({ navigation }) => {
                 secureTextEntry={true}
             />
 
-            <Button onPress={SignUpUser} title="Create Account" />
+            <CheckBox
+                checked={check}
+                onPress={() => setCheck(!check)}
+                containerStyle={{ backgroundColor: 'transparent', marginBottom: 20 }}
+                title="I agree with all Terms of Services and Privacy Policy of RoomTrip"
+            />
+
+            <Button
+                disabled={(!email && !name) || (!password || !check)}
+                type="solid"
+                buttonStyle={{ backgroundColor: 'orange', width: '100%' }}
+                onPress={SignUpUser}
+                title="Create an account"
+            />
+
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                <Text>Already have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={{ color: 'darkblue' }}>Login now!</Text>
+                </TouchableOpacity>
+            </View>
         </KeyboardAvoidingView>
     );
 };

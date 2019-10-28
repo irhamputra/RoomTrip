@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, Text } from 'react-native-elements';
 import { updateEmail, updatePassword, login } from '../redux/actions/user';
-import { styles } from './Home';
 
 const Login = ({ navigation }) => {
     const { email, password } = useSelector(state => state.user);
@@ -20,7 +19,14 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <KeyboardAvoidingView
+            style={{ marginHorizontal: 30, justifyContent: 'center', alignItems: 'center', flex: 1 }}
+            behavior="padding"
+            enabled
+        >
+            <Text h2 h2Style={{ fontWeight: 'bold', marginVertical: 20 }}>
+                <Text style={{ color: 'orange' }}>Room</Text>Trip
+            </Text>
             <Input
                 label="Email"
                 containerStyle={{ marginBottom: 10 }}
@@ -30,7 +36,7 @@ const Login = ({ navigation }) => {
                 onChangeText={e => dispatchEmail(e)}
             />
             <Input
-                containerStyle={{ marginBottom: 10 }}
+                containerStyle={{ marginBottom: 20 }}
                 label="Password"
                 value={password}
                 autoCapitalize="none"
@@ -38,8 +44,13 @@ const Login = ({ navigation }) => {
                 onChangeText={e => dispatchPassword(e)}
                 secureTextEntry={true}
             />
-            <Button onPress={LoginUser} title="Login" />
-            <Button onPress={() => navigation.navigate('SignUp')} title="Sign Up" />
+            <Button type="solid" buttonStyle={{ backgroundColor: 'orange', width: '100%' }} onPress={LoginUser} title="Login" />
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                <Text>Don't have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                    <Text style={{ color: 'darkblue' }}>Sign Up now!</Text>
+                </TouchableOpacity>
+            </View>
         </KeyboardAvoidingView>
     );
 };
