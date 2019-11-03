@@ -15,6 +15,9 @@ export const user = (state = {}, action) => {
         case 'UPDATE_PAYPAL':
             return { ...state, paypal: action.payload };
 
+        case 'SAVE_PROFILE':
+            return state;
+
         case 'SAVE_PAYPAL':
             return state;
 
@@ -23,6 +26,9 @@ export const user = (state = {}, action) => {
 
         case 'UPDATE_PASSWORD':
             return { ...state, password: action.payload };
+
+        case 'UPDATE_PHONE_NUMBER':
+            return { ...state, phoneNumber: action.payload };
 
         default:
             return state;

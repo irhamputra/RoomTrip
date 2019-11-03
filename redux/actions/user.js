@@ -18,6 +18,29 @@ export const updatePayPal = paypalMail => {
     return { type: 'UPDATE_PAYPAL', payload: paypalMail };
 };
 
+export const updatePhoneNumber = phoneNumber => {
+    return { type: 'UPDATE_PHONE_NUMBER', payload: phoneNumber };
+};
+
+export const saveProfile = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { email, name, phoneNumber, uid, photoURL } = getState().user;
+            const res = await db
+                .collection('users')
+                .doc(uid)
+                .update({
+                    email,
+                    name,
+                    phoneNumber,
+                    photoURL
+                });
+            console.log(res);
+            dispatch({ type: 'SAVE_PROFILE' });
+        } catch (e) {}
+    };
+};
+
 export const savePayPal = () => {
     return async (dispatch, getState) => {
         try {

@@ -14,10 +14,6 @@ const Login = ({ navigation }) => {
     // TODO: How to read token from AsyncStorage in this case useEffect doesn't want to cleanup
     useEffect(() => {});
 
-    const LoginUser = () => {
-        dispatchLogin();
-    };
-
     return (
         <KeyboardAvoidingView
             style={{ marginHorizontal: 30, justifyContent: 'center', alignItems: 'center', flex: 1 }}
@@ -44,7 +40,7 @@ const Login = ({ navigation }) => {
                 onChangeText={e => dispatchPassword(e)}
                 secureTextEntry={true}
             />
-            <Button type="solid" buttonStyle={{ backgroundColor: 'orange', width: '100%' }} onPress={LoginUser} title="Login" />
+            <Button type="solid" buttonStyle={{ backgroundColor: 'orange', width: '100%' }} onPress={() => dispatchLogin()} title="Login" />
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
                 <Text>Don't have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
