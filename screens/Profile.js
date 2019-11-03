@@ -20,19 +20,15 @@ const Profile = ({ navigation }) => {
     const otherList = [
         {
             title: 'Help',
-            icon: 'question-circle'
         },
         {
             title: 'Terms of Services',
-            icon: 'tasks'
         },
         {
             title: 'Privacy Policy',
-            icon: 'id-badge'
         },
         {
             title: 'Rate RoomTrip App',
-            icon: 'star'
         }
     ];
 
@@ -65,7 +61,7 @@ const Profile = ({ navigation }) => {
 
             <View>
                 {otherList.map((item, i) => (
-                    <ListItem key={i} leftIcon={{ name: item.icon, type: 'font-awesome' }} title={item.title} bottomDivider chevron />
+                    <ListItem key={i} title={item.title} bottomDivider chevron />
                 ))}
             </View>
 

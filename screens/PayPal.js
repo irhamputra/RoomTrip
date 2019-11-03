@@ -33,7 +33,7 @@ const PayPal = ({ navigation }) => {
                     dispatchSavePayPal();
                     navigation.goBack();
                 }}
-                title={paypal ? 'Edit PayPal Account' : 'Add PayPal Account'}
+                title="Save PayPal Account"
             />
             <Text style={{ marginVertical: 20, color: 'gray', fontSize: 12 }}>
                 By adding your PayPal Account, we can immediately send your money to your account

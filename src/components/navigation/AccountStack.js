@@ -1,6 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import Profile from '../../../screens/Profile';
 import PayPal from '../../../screens/PayPal';
+import Host from '../../../screens/Host';
+import EditProfile from '../../../screens/EditProfile';
 
 const AccountStack = createStackNavigator({
     AccountStack: {
@@ -13,6 +15,18 @@ const AccountStack = createStackNavigator({
         screen: PayPal,
         navigationOptions: {
             title: 'PayPal Account'
+        }
+    },
+    HostStack: {
+        screen: Host,
+        navigationOptions: {
+            title: "Your Room"
+        }
+    },
+    EditProfileStack: {
+        screen: EditProfile,
+        navigationOptions: {
+            title: "Edit Profile"
         }
     }
 });
