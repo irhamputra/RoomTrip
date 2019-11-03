@@ -16,3 +16,5 @@ Milestone
 - [ ] Get data from database
 - [ ] Create Booking feature
 - [ ] Chat feature
+- [ ] Create QRCode for checkin feature
+- [ ] Use notification for changing status in Booking and Chat
