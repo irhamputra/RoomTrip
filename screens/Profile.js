@@ -19,16 +19,16 @@ const Profile = ({ navigation }) => {
 
     const otherList = [
         {
-            title: 'Help',
+            title: 'Help'
         },
         {
-            title: 'Terms of Services',
+            title: 'Terms of Services'
         },
         {
-            title: 'Privacy Policy',
+            title: 'Privacy Policy'
         },
         {
-            title: 'Rate RoomTrip App',
+            title: 'Rate RoomTrip App'
         }
     ];
 

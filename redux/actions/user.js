@@ -76,7 +76,7 @@ export const getUser = uid => {
                 .collection('users')
                 .doc(uid)
                 .get();
-            const documentSnapshot = user.exists;
+            const documentSnapshot = await user.exists;
             if (documentSnapshot) {
                 dispatch({ type: 'GET_USER', payload: user.data() });
             }
@@ -116,8 +116,8 @@ export const signUp = () => {
                     email,
                     photoURL: '',
                     name,
-                    phoneNumber: null,
-                    paypal: null
+                    phoneNumber: '',
+                    paypal: ''
                 };
 
                 db.collection('users')
