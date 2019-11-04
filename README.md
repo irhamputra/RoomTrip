@@ -4,7 +4,7 @@ An initiative project for Indonesian citizen who look for
 a room for short trip or attending the admission 
 at any university in Germany.
 
-Milestone
+#### Milestone
 - [x] UI Design
 - [x] Login - SignUp Flow
 - [x] Create user and save it to database
