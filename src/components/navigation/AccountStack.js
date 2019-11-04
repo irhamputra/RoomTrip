@@ -20,15 +20,29 @@ const AccountStack = createStackNavigator({
     HostStack: {
         screen: Host,
         navigationOptions: {
-            title: "Your Room"
+            title: 'Become a Host',
+            headerLeft: null,
+            gesturesEnabled: false
         }
     },
     EditProfileStack: {
         screen: EditProfile,
         navigationOptions: {
-            title: "Edit Profile"
+            title: 'Edit Profile'
         }
     }
 });
+
+AccountStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible
+    };
+};
 
 export default AccountStack;

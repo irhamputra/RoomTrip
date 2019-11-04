@@ -8,13 +8,13 @@ const HomeStack = createStackNavigator({
     HomeStack: {
         screen: Home,
         navigationOptions: {
-            headerLeft: () => (
+            headerTitle: () => (
                 <View>
-                    <Text h4 h4Style={{ fontWeight: 'bold', marginLeft: 15 }}>
+                    <Text h4 h4Style={{ fontWeight: 'bold' }}>
                         <Text style={{ color: 'orange' }}>Room</Text>Trip
                     </Text>
                 </View>
-            )
+            ),
         }
     }
 });
