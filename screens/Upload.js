@@ -43,7 +43,7 @@ const Upload = () => {
     }, []);
 
     return (
-        <ScrollView style={{ flex: 1, marginHorizontal: 15, marginTop: 30  }}>
+        <ScrollView style={{ flex: 1, marginHorizontal: 15, paddingTop: 30  }}>
             <Text h3 h3Style={{ fontWeight: 'bold', marginBottom: 15 }}>
                 Welcome to RoomTrip Host
             </Text>

@@ -5,66 +5,19 @@ import { Divider, Button, ListItem } from 'react-native-elements';
 import { logout } from '../redux/actions/user';
 import AccountProfile from '../src/components/AccountProfile';
 import Landlord from '../src/components/Landlord';
+import OtherLists from '../src/components/OtherLists';
+import PaypalAccount from '../src/components/PaypalAccount';
 
 const Profile = ({ navigation }) => {
-    const { paypal } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const dispatchLogout = () => dispatch(logout());
-
-    const PayPal = [
-        {
-            title: 'PayPal Account'
-        }
-    ];
-
-    const otherList = [
-        {
-            title: 'Help'
-        },
-        {
-            title: 'Terms of Services'
-        },
-        {
-            title: 'Privacy Policy'
-        },
-        {
-            title: 'Rate RoomTrip App'
-        }
-    ];
 
     return (
         <ScrollView style={{ flex: 1 }}>
             <AccountProfile />
-
-            <Divider style={{ marginBottom: 15 }} />
-            <Divider style={{ marginTop: 15 }} />
-
             <Landlord />
-
-            <Divider />
-
-            <View style={{ marginBottom: 15 }}>
-                {PayPal.map((item, i) => (
-                    <ListItem
-                        key={i}
-                        checkmark={!!paypal}
-                        leftIcon={{ name: 'credit-card', type: 'font-awesome' }}
-                        title={item.title}
-                        onPress={() => navigation.navigate('PayPalStack')}
-                        bottomDivider
-                        chevron
-                    />
-                ))}
-            </View>
-
-            <Divider style={{ marginTop: 15 }} />
-
-            <View>
-                {otherList.map((item, i) => (
-                    <ListItem key={i} title={item.title} bottomDivider chevron />
-                ))}
-            </View>
-
+            <PaypalAccount />
+            <OtherLists />
             <Button
                 type="clear"
                 containerStyle={{ marginVertical: 15 }}

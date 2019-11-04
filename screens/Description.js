@@ -11,37 +11,39 @@ const Description = () => {
     const dispatchDescription = description => dispatch(updateDescription(description));
 
     return (
-        <KeyboardAvoidingView behavior="padding" enabled>
-            <View style={{ marginHorizontal: 15, marginTop: 30 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 15 }}>3. Tell more about your space</Text>
-                <Text style={{ color: 'darkgray', marginBottom: 15 }}>
-                    Tell more about your near space. Is it near a bus or station? Cafe? Supermarket? or maybe Döner?
-                </Text>
-            </View>
-            <Input
-                label="Description"
-                labelStyle={{ color: 'black' }}
-                containerStyle={{ marginBottom: 10, paddingHorizontal: 15 }}
-                value={description}
-                autoCorrect={false}
-                multiline={true}
-                numberOfLines={4}
-                keyboardType="default"
-                autoCompleteType="name"
-                autoCapitalize="none"
-                placeholder="Lokasinya dekat dengan halte kereta dan bisa ditempuh selama 3 menit ke universitas, supermarket hanya 3 menit"
-                onChangeText={description => {
-                    dispatchDescription(description);
-                }}
-            />
-            <View style={{ paddingHorizontal: 15 }}>
-                <Button
-                    title="Save Room"
-                    onPress={() => {
-                        console.log('Save');
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
+            <ScrollView>
+                <View style={{ marginHorizontal: 15, marginTop: 30 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 15 }}>3. Tell more about your space</Text>
+                    <Text style={{ color: 'darkgray', marginBottom: 15 }}>
+                        Tell more about your near space. Is it near a bus or station? Cafe? Supermarket? or maybe Döner?
+                    </Text>
+                </View>
+                <Input
+                    label="Description"
+                    labelStyle={{ color: 'black' }}
+                    containerStyle={{ marginBottom: 10, paddingHorizontal: 15 }}
+                    value={description}
+                    autoCorrect={false}
+                    multiline={true}
+                    numberOfLines={4}
+                    keyboardType="default"
+                    autoCompleteType="name"
+                    autoCapitalize="none"
+                    placeholder="Lokasinya dekat dengan halte kereta dan bisa ditempuh selama 3 menit ke universitas, supermarket hanya 3 menit"
+                    onChangeText={description => {
+                        dispatchDescription(description);
                     }}
                 />
-            </View>
+                <View style={{ paddingHorizontal: 15 }}>
+                    <Button
+                        title="Save Room"
+                        onPress={() => {
+                            console.log('Save');
+                        }}
+                    />
+                </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     );
 };
