@@ -1,14 +1,16 @@
+import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import Profile from '../../../screens/Profile';
 import PayPal from '../../../screens/PayPal';
-import Host from '../../../screens/Host';
 import EditProfile from '../../../screens/EditProfile';
+import HostStack from './HostStack';
+import BackButton from '../BackButton';
 
 const AccountStack = createStackNavigator({
     AccountStack: {
         screen: Profile,
         navigationOptions: {
-            title: 'Account'
+            title: 'Profile'
         }
     },
     PayPalStack: {
@@ -18,10 +20,13 @@ const AccountStack = createStackNavigator({
         }
     },
     HostStack: {
-        screen: Host,
+        screen: HostStack,
         navigationOptions: {
             title: 'Become a Host',
-            headerLeft: null,
+            headerLeft: <BackButton />,
+            headerLeftContainerStyle: {
+                marginLeft: 5
+            },
             gesturesEnabled: false
         }
     },

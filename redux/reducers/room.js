@@ -11,6 +11,15 @@ export const room = (state = {}, action) => {
 
         case 'UPDATE_DESCRIPTION':
             return { ...state, description: action.payload };
+    
+        case 'UPDATE_CITY':
+            return { ...state, city: action.payload };
+    
+        case 'UPDATE_ZIP_CODE':
+            return { ...state, zipCode: action.payload };
+    
+        case 'UPDATE_PRICE':
+            return { ...state, price: action.payload };
 
         case 'UPLOAD_PHOTO':
             return { ...state, photoURL: action.payload };
