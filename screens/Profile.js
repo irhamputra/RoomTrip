@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, AsyncStorage, ScrollView } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Divider, Button, ListItem } from 'react-native-elements';
+import { AsyncStorage, ScrollView } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { Button } from 'react-native-elements';
 import { logout } from '../redux/actions/user';
 import AccountProfile from '../src/components/AccountProfile';
 import Landlord from '../src/components/Landlord';

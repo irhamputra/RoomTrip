@@ -1,8 +1,8 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import Login from '../../../screens/Login';
 import SignUp from '../../../screens/SignUp';
 
-export const AuthNavigator = createStackNavigator(
+export const AuthNavigator = createMaterialTopTabNavigator(
     {
         Login: {
             screen: Login
@@ -10,11 +10,10 @@ export const AuthNavigator = createStackNavigator(
         SignUp: {
             screen: SignUp
         }
-    },
-    {
-        headerMode: 'none',
-        navigationOptions: {
-            headerVisible: false
-        }
+    }, {
+        initialRoute: "Login",
+        lazy: true,
+        swipeEnabled: true,
+        tabBarComponent: null,
     }
 );

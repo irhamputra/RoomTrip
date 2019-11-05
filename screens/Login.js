@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button, Text } from 'react-native-elements';
 import { updateEmail, updatePassword, login } from '../redux/actions/user';
@@ -15,38 +15,43 @@ const Login = ({ navigation }) => {
     useEffect(() => {});
 
     return (
-        <KeyboardAvoidingView
-            style={{ marginHorizontal: 30, justifyContent: 'center', alignItems: 'center', flex: 1 }}
-            behavior="padding"
-            enabled
-        >
-            <Text h2 h2Style={{ fontWeight: 'bold', marginVertical: 20 }}>
-                <Text style={{ color: 'orange' }}>Room</Text>Trip
-            </Text>
-            <Input
-                label="Email"
-                containerStyle={{ marginBottom: 10 }}
-                value={email}
-                autoCapitalize="none"
-                placeholder="user@address.com"
-                onChangeText={e => dispatchEmail(e)}
-            />
-            <Input
-                containerStyle={{ marginBottom: 20 }}
-                label="Password"
-                value={password}
-                autoCapitalize="none"
-                placeholder="Password"
-                onChangeText={e => dispatchPassword(e)}
-                secureTextEntry={true}
-            />
-            <Button type="solid" buttonStyle={{ backgroundColor: 'orange', width: '100%' }} onPress={() => dispatchLogin()} title="Login" />
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                <Text>Don't have an account? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                    <Text style={{ color: 'darkblue' }}>Sign Up now!</Text>
-                </TouchableOpacity>
-            </View>
+        <KeyboardAvoidingView style={{ flex: 1, paddingHorizontal: 30 }} behavior="padding" enabled>
+            <SafeAreaView style={{ flex: 1 }}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+                    <Text h2 h2Style={{ fontWeight: 'bold', marginVertical: 20, textAlign: "center" }}>
+                        <Text style={{ color: 'orange' }}>Room</Text>Trip
+                    </Text>
+                    <Input
+                        label="Email"
+                        containerStyle={{ marginBottom: 10 }}
+                        value={email}
+                        autoCapitalize="none"
+                        placeholder="user@address.com"
+                        onChangeText={e => dispatchEmail(e)}
+                    />
+                    <Input
+                        containerStyle={{ marginBottom: 20 }}
+                        label="Password"
+                        value={password}
+                        autoCapitalize="none"
+                        placeholder="Password"
+                        onChangeText={e => dispatchPassword(e)}
+                        secureTextEntry={true}
+                    />
+                    <Button
+                        type="solid"
+                        buttonStyle={{ backgroundColor: 'orange', width: '100%' }}
+                        onPress={() => dispatchLogin()}
+                        title="Login"
+                    />
+                    <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: "center" }}>
+                        <Text>Don't have an account? </Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                            <Text style={{ color: 'darkblue' }}>Sign Up now!</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         </KeyboardAvoidingView>
     );
 };
