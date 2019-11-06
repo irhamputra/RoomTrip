@@ -9,7 +9,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateBlobUser, updateProfilePicture } from '../redux/actions/user';
 
 const EditProfile = ({ navigation }) => {
-    const [loading, setLoading] = useState(false);
     const { email, name, photoURL, phoneNumber } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const dispatchName = name => dispatch(updateName(name));
@@ -23,7 +22,9 @@ const EditProfile = ({ navigation }) => {
         if (Constants.platform.ios) {
             const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
             if (status === 'granted') {
-                let { cancelled, uri } = await ImagePicker.launchImageLibraryAsync();
+                let { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
+                    allowsEditing: true
+                });
                 if (!cancelled) {
                     dispatchProfilePicture(uri);
                     uploadImage(uri)
