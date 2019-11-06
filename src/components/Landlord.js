@@ -11,7 +11,7 @@ const Landlord = ({ navigation }) => {
     return (
         <View>
             <Divider />
-            <View style={{ margin: 15, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ margin: 15, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View>
                     <Text style={{ fontWeight: 'bold', marginBottom: 10 }}>Become a host</Text>
                     <View style={{ flexDirection: 'row' }}>
@@ -22,19 +22,15 @@ const Landlord = ({ navigation }) => {
                         <AntDesign name="checkcircle" size={18} color="gray" />
                         <Text style={{ marginBottom: 10, marginLeft: 5 }}>Aufenthaltstitel</Text>
                     </View>
-                    {paypal ? (
-                        <Button
-                            buttonStyle={{ backgroundColor: 'orange' }}
-                            title="Add Room"
-                            onPress={() => navigation.navigate('HostStack')}
-                        />
-                    ) : (
-                        <Text style={{ marginVertical: 20, color: 'gray', fontSize: 12 }}>
+                    {!paypal && (
+                        <Text style={{ color: 'gray', fontSize: 12 }}>
                             Please add PayPal account first if you want to become a host
                         </Text>
                     )}
                 </View>
-                <Text>No</Text>
+                {paypal ? (
+                    <Button buttonStyle={{ backgroundColor: 'orange' }} title="Add Room" onPress={() => navigation.navigate('HostStack')} />
+                ) : null}
             </View>
         </View>
     );

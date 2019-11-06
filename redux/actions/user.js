@@ -1,6 +1,7 @@
 import firebase from 'firebase';
-import db from '../../config/firebase';
+import db, { storage } from '../../config/firebase';
 import { AsyncStorage } from 'react-native';
+import { imageBaseURL } from '../../constants/imageURL';
 
 export const updateEmail = email => {
     return { type: 'UPDATE_EMAIL', payload: email };
@@ -22,22 +23,60 @@ export const updatePhoneNumber = phoneNumber => {
     return { type: 'UPDATE_PHONE_NUMBER', payload: phoneNumber };
 };
 
+export const updateProfilePicture = uri => {
+    return { type: 'UPLOAD_PROFILE_PICTURE', payload: uri };
+};
+
+export const updateBlobUser = blob => {
+    return { type: 'UPDATE_BLOB_USER', payload: blob };
+};
+
 export const saveProfile = () => {
     return async (dispatch, getState) => {
         try {
-            const { email, name, phoneNumber, uid, photoURL } = getState().user;
-            const res = await db
-                .collection('users')
-                .doc(uid)
-                .update({
-                    email,
-                    name,
-                    phoneNumber,
-                    photoURL
-                });
-            console.log(res);
+            const { email, name, phoneNumber, uid, blobUser, photoURL } = getState().user;
+            // define ref to profile
+            const ref = await storage.ref().child(`images/profile/${uid}`);
+            // put blob to ref
+            const result = await ref.put(blobUser);
+            // get metadata fullPatch
+            const { fullPath } = await ref.getMetadata();
+            // encode URL fullPatch
+            const encodeURL = encodeURIComponent(fullPath);
+            // create new photo URL
+            const newPhotoURL = `${imageBaseURL}${encodeURL}?alt=media`;
+
+            // TODO: in update photo should check old photo first refer to uid, delete
+            // if success update photoURL with new otherwise dont update
+            if (result.state === 'success') {
+                await db
+                    .collection('users')
+                    .doc(uid)
+                    .update({
+                        email,
+                        name,
+                        phoneNumber,
+                        photoURL: newPhotoURL
+                    });
+            } else {
+                alert('Ouch, something bad happened. Try it again later!');
+                await db
+                    .collection('users')
+                    .doc(uid)
+                    .update({
+                        email,
+                        name,
+                        phoneNumber,
+                        photoURL
+                    });
+            }
+            
+            // should dispatch save profile
+            console.log('dispatch save profile');
             dispatch({ type: 'SAVE_PROFILE' });
-        } catch (e) {}
+        } catch (e) {
+            console.error(e);
+        }
     };
 };
 

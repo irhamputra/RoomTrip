@@ -33,7 +33,11 @@ const AccountStack = createStackNavigator({
     EditProfileStack: {
         screen: EditProfile,
         navigationOptions: {
-            title: 'Edit Profile'
+            title: 'Edit Profile',
+            headerLeft: <BackButton />,
+            headerLeftContainerStyle: {
+                marginLeft: 5
+            },
         }
     }
 });

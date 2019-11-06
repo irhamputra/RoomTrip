@@ -15,6 +15,12 @@ export const user = (state = {}, action) => {
         case 'UPDATE_PAYPAL':
             return { ...state, paypal: action.payload };
 
+        case 'UPLOAD_PROFILE_PICTURE':
+            return { ...state, photoURL: action.payload };
+
+        case 'UPDATE_BLOB_USER':
+            return { ...state, blobUser: action.payload };
+
         case 'SAVE_PROFILE':
             return state;
 

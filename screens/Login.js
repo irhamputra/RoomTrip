@@ -12,13 +12,13 @@ const Login = ({ navigation }) => {
     const dispatchLogin = () => dispatch(login());
 
     // TODO: How to read token from AsyncStorage in this case useEffect doesn't want to cleanup
-    useEffect(() => {});
+    useEffect(() => {},[]);
 
     return (
         <KeyboardAvoidingView style={{ flex: 1, paddingHorizontal: 30 }} behavior="padding" enabled>
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-                    <Text h2 h2Style={{ fontWeight: 'bold', marginVertical: 20, textAlign: "center" }}>
+                    <Text h2 h2Style={{ fontWeight: 'bold', marginBottom: 20, textAlign: "center" }}>
                         <Text style={{ color: 'orange' }}>Room</Text>Trip
                     </Text>
                     <Input
