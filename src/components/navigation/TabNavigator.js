@@ -5,6 +5,7 @@ import AccountStack from './AccountStack';
 import HomeStack from './HomeStack';
 import BookingsStack from './BookingsStack';
 import InboxStack from './InboxStack';
+import ChatStack from './ChatStack';
 
 export const TabNavigator = createBottomTabNavigator(
     {
@@ -13,6 +14,9 @@ export const TabNavigator = createBottomTabNavigator(
         },
         Bookings: {
             screen: BookingsStack
+        },
+        Chat: {
+            screen: ChatStack
         },
         Inbox: {
             screen: InboxStack
@@ -36,12 +40,17 @@ export const TabNavigator = createBottomTabNavigator(
                     iconName = 'inbox';
                 } else if (routeName === 'Profile') {
                     iconName = 'user';
+                } else if (routeName === 'Chat') {
+                    iconName = 'message1';
                 }
 
-                return <IconComponent name={iconName} size={28} color={tintColor} />;
+                return <IconComponent name={iconName} size={24} color={tintColor} />;
             }
         }),
+        lazy: true,
         tabBarOptions: {
+            keyboardHidesTabBar: true,
+            showLabel: false,
             activeTintColor: 'orange',
             inactiveTintColor: 'gray'
         }

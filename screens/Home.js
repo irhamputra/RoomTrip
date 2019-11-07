@@ -1,21 +1,26 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import Lists from '../src/components/Lists';
+import Card from '../src/components/Cards';
 
 const Home = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Home View</Text>
-    </View>
-  );
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <Lists />
+                <Card />
+            </ScrollView>
+        </SafeAreaView>
+    );
 };
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });
 
 export default Home;
