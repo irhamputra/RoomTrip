@@ -15,12 +15,6 @@ export const TabNavigator = createBottomTabNavigator(
         Bookings: {
             screen: BookingsStack
         },
-        Chat: {
-            screen: ChatStack
-        },
-        Inbox: {
-            screen: InboxStack
-        },
         Profile: {
             screen: AccountStack
         }
@@ -36,12 +30,8 @@ export const TabNavigator = createBottomTabNavigator(
                     iconName = 'home';
                 } else if (routeName === 'Bookings') {
                     iconName = 'profile';
-                } else if (routeName === 'Inbox') {
-                    iconName = 'inbox';
                 } else if (routeName === 'Profile') {
                     iconName = 'user';
-                } else if (routeName === 'Chat') {
-                    iconName = 'message1';
                 }
 
                 return <IconComponent name={iconName} size={24} color={tintColor} />;
