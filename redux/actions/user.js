@@ -38,38 +38,32 @@ export const register = (fullName, email, password, confirmPassword) => {
 export const saveProfile = () => {
     return async (dispatch, getState) => {
         try {
-            const { email, name, phoneNumber, uid, blobUser, photoURL } = getState().user;
-            // define ref to profile
-            const ref = await storage.ref().child(`images/profile/${uid}`);
-            // put blob to ref
-            const result = await ref.put(blobUser);
-            // get metadata fullPatch
-            const { fullPath } = await ref.getMetadata();
-            // encode URL fullPatch
-            const encodeURL = encodeURIComponent(fullPath);
-            // create new photo URL
-            const newPhotoURL = `${imageBaseURL}${encodeURL}?alt=media`;
+            const { email, fullName, phoneNumber, uid, blobUser, photoURL } = getState().user;
+            if (blobUser) {
+                const ref = await storage.ref().child(`images/profile/${uid}`);
+                const result = await ref.put(blobUser);
+                const { fullPath } = await ref.getMetadata();
+                const encodeURL = encodeURIComponent(fullPath);
+                const newPhotoURL = `${imageBaseURL}${encodeURL}?alt=media`;
 
-            // TODO: in update photo should check old photo first refer to uid, delete
-            // if success update photoURL with new otherwise dont update
-            if (result.state === 'success') {
-                await db
-                    .collection('users')
-                    .doc(uid)
-                    .update({
-                        email,
-                        name,
-                        phoneNumber,
-                        photoURL: newPhotoURL
-                    });
+                if (result.state === 'success') {
+                    await db
+                        .collection('users')
+                        .doc(uid)
+                        .update({
+                            email,
+                            fullName,
+                            phoneNumber,
+                            photoURL: newPhotoURL
+                        });
+                }
             } else {
-                alert('Ouch, something bad happened. Try it again later!');
                 await db
                     .collection('users')
                     .doc(uid)
                     .update({
                         email,
-                        name,
+                        fullName,
                         phoneNumber,
                         photoURL
                     });
@@ -79,7 +73,7 @@ export const saveProfile = () => {
             console.log('dispatch save profile');
             dispatch({ type: 'SAVE_PROFILE' });
         } catch (e) {
-            console.error(e);
+            console.log(e);
         }
     };
 };

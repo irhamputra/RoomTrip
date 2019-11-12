@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ScrollView, View, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 import { Avatar, Button, Input } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProfile, updateEmail, updateName, updatePhoneNumber } from '../redux/actions/user';
@@ -9,7 +9,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateBlobUser, updateProfilePicture } from '../redux/actions/user';
 
 const EditProfile = ({ navigation }) => {
-    const { email, name, photoURL, phoneNumber } = useSelector(state => state.user);
+    const { email, fullName, photoURL, phoneNumber } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const dispatchName = name => dispatch(updateName(name));
     const dispatchEmail = email => dispatch(updateEmail(email));
@@ -47,13 +47,13 @@ const EditProfile = ({ navigation }) => {
                 {photoURL ? (
                     <Avatar rounded size={120} showEditButton onEditPress={chooseImage} source={{ uri: photoURL }} />
                 ) : (
-                    <Avatar rounded size={120} onEditPress={chooseImage} showEditButton title={name.charAt(0)} />
+                    <Avatar rounded size={120} onEditPress={chooseImage} showEditButton title={fullName.charAt(0)} />
                 )}
             </View>
             <Input
                 label="Name"
                 containerStyle={{ marginBottom: 10 }}
-                value={name}
+                value={fullName}
                 autoCorrect={false}
                 keyboardType="default"
                 autoCompleteType="name"
@@ -89,6 +89,7 @@ const EditProfile = ({ navigation }) => {
             />
 
             <Button
+                buttonStyle={{ backgroundColor: 'orange' }}
                 onPress={() => {
                     dispatchSaveProfile();
                     if (photoURL) {
