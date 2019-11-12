@@ -6,14 +6,18 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { updateBlob, uploadPhoto } from '../redux/actions/room';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSingleRoom } from '../redux/actions/room';
 
 const Upload = () => {
     const [dimension, setDimension] = useState(null);
     const { photoURL } = useSelector(state => state.room);
+    const { allRooms } = useSelector(state => state.rooms);
+    const { uid } = useSelector(state => state.user);
     const dispatch = useDispatch();
 
     const dispatchPhotoURL = photoURL => dispatch(uploadPhoto(photoURL));
     const dispatchBlob = blob => dispatch(updateBlob(blob));
+    const dispatchSingleRoom = id => dispatch(getSingleRoom(id));
 
     const chooseImage = async () => {
         if (Constants.platform.ios) {
@@ -40,10 +44,17 @@ const Upload = () => {
     useEffect(() => {
         const { height, width } = Dimensions.get('window');
         setDimension({ height, width });
+
+        // retrieve single room based on id
+        const currentUserRoom = allRooms.filter(room => room.id === uid);
+        for (let room of currentUserRoom) {
+            dispatchSingleRoom(room.id);
+        }
     }, []);
 
+    // TODO: Change form to formik
     return (
-        <ScrollView style={{ flex: 1, marginHorizontal: 15, paddingTop: 30  }}>
+        <ScrollView style={{ flex: 1, marginHorizontal: 15, paddingTop: 30 }}>
             <Text h3 h3Style={{ fontWeight: 'bold', marginBottom: 15 }}>
                 Welcome to RoomTrip Host
             </Text>

@@ -1,16 +1,14 @@
 import React from 'react';
 import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
-import { Button, Input, Text } from 'react-native-elements';
-import { saveRoom, updateDescription } from '../redux/actions/room';
+import { Input, Text } from 'react-native-elements';
+import { updateDescription } from '../redux/actions/room';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Description = ({ navigation }) => {
+const Description = () => {
     const room = useSelector(state => state.room);
-
     const dispatch = useDispatch();
     const dispatchDescription = description => dispatch(updateDescription(description));
-    const dispatchAddRoom = () => dispatch(saveRoom());
-    
+
     // TODO: change all forms to formik
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
@@ -37,17 +35,6 @@ const Description = ({ navigation }) => {
                         dispatchDescription(description);
                     }}
                 />
-                <View style={{ paddingHorizontal: 15 }}>
-                    <Button
-                        title="Save Room"
-                        onPress={() => {
-                            if (room) {
-                                dispatchAddRoom();
-                                navigation.goBack()
-                            }
-                        }}
-                    />
-                </View>
             </ScrollView>
         </KeyboardAvoidingView>
     );

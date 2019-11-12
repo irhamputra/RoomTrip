@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import db from '../../config/firebase';
 
 export const getAllRooms = () => {
-    return async (dispatch) => {
+    return async dispatch => {
         try {
             let res = [];
             const snapshot = await db.collection('rooms').get();
@@ -13,26 +13,7 @@ export const getAllRooms = () => {
                 });
             });
 
-            dispatch({ type: 'GET_ALL_ROOMS', payload: res });
-        } catch (e) {
-            alert(e);
-        }
-    };
-};
-
-export const getSingleRoom = id => {
-    return async dispatch => {
-        try {
-            const snapshot = await db
-                .collection('rooms')
-                .doc(id)
-                .get();
-
-            const documentSnapshot = await snapshot.exists;
-
-            if (documentSnapshot) {
-                dispatch({ type: 'GET_SINGLE_ROOM', payload: snapshot.data() });
-            }
+            await dispatch({ type: 'GET_ALL_ROOMS', payload: res });
         } catch (e) {
             alert(e);
         }

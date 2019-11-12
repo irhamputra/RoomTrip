@@ -37,18 +37,29 @@ export const updateBlob = blob => {
     return { type: 'UPDATE_BLOB', payload: blob };
 };
 
-export const cancelAddRoom = () => {
-    return { type: 'CANCEL_ADD_ROOM' };
+export const cleanStateSingleRoom = () => {
+    return { type: 'CLEAN_STATE_SINGLE_ROOM' };
 };
 
-const getRoomID = id => {
-    return { type: 'GET_SINGLE_ROOM', payload: id };
+export const getSingleRoom = id => {
+    return async dispatch => {
+        try {
+            const snapshot = await db
+                .collection('rooms')
+                .doc(id)
+                .get();
+
+            dispatch({ type: 'GET_SINGLE_ROOM', payload: snapshot.data() });
+        } catch (e) {
+            alert(e);
+        }
+    };
 };
 
 export const saveRoom = () => {
     return async (dispatch, getState) => {
         try {
-            const { title, address, guest, price, description, city, blob } = getState().room;
+            const { title, address, guest, price, description, city, blob, zipCode, photoURL } = getState().room;
             const { uid } = getState().user;
 
             if (blob) {
@@ -58,29 +69,58 @@ export const saveRoom = () => {
                 const encodeURL = encodeURIComponent(fullPath);
                 const newRoomURL = `${imageBaseURL}${encodeURL}?alt=media`;
 
+                const newRoom = {
+                    id: uid,
+                    title,
+                    address,
+                    zipCode,
+                    guest,
+                    city,
+                    price,
+                    description,
+                    photoURL: newRoomURL,
+                    verified: false
+                };
+
                 if (result.state === 'success') {
-                    const newRoom = {
-                        id: uid,
-                        title,
-                        address,
-                        guest,
-                        city,
-                        price,
-                        description,
-                        photoURL: newRoomURL,
-                        verified: false
-                    };
+                    // if photoURL include http is old photos
+                    if (photoURL.includes('https://firebasestorage')) {
+                        const res = await db
+                            .collection('rooms')
+                            .doc(uid)
+                            .update(newRoom);
+                        console.log(res);
+                        dispatch({ type: 'UPDATE_OLD_PHOTO' });
+                    } else {
+                        const res = await db
+                            .collection('rooms')
+                            .doc(uid)
+                            .set(newRoom);
 
-                    const res = await db
-                        .collection('rooms')
-                        .doc(uid)
-                        .set(newRoom);
-
-                    console.log(res);
-                    dispatch({
-                        type: 'ADD ROOM'
-                    });
+                        console.log(res);
+                        await dispatch({ type: 'ADD ROOM' });
+                    }
                 }
+            } else {
+                const updateRoom = {
+                    id: uid,
+                    title,
+                    address,
+                    zipCode,
+                    guest,
+                    city,
+                    price,
+                    description,
+                    photoURL,
+                    verified: false
+                };
+                const res = await db
+                    .collection('rooms')
+                    .doc(uid)
+                    .update(updateRoom);
+
+                console.log(res);
+                await dispatch({ type: 'UPDATE_ROOM_WITHOUT_BLOB' });
             }
         } catch (e) {
             console.log(e);

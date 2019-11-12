@@ -5,6 +5,7 @@ import PayPal from '../../../screens/PayPal';
 import EditProfile from '../../../screens/EditProfile';
 import HostStack from './HostStack';
 import BackButton from '../BackButton';
+import SaveButton from '../SaveButton';
 
 const AccountStack = createStackNavigator({
     AccountStack: {
@@ -27,6 +28,10 @@ const AccountStack = createStackNavigator({
             headerLeftContainerStyle: {
                 marginLeft: 5
             },
+            headerRight: <SaveButton />,
+            headerRightContainerStyle: {
+                marginRight: 5
+            },
             gesturesEnabled: false
         }
     },
@@ -37,7 +42,7 @@ const AccountStack = createStackNavigator({
             headerLeft: <BackButton />,
             headerLeftContainerStyle: {
                 marginLeft: 5
-            },
+            }
         }
     }
 });

@@ -4,26 +4,34 @@ import firebase from 'firebase';
 import { styles } from './Home';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../redux/actions/user';
+import { getAllRooms } from '../redux/actions/rooms';
 
 const Loading = ({ navigation }) => {
     const dispatch = useDispatch();
-    const dispatchGetUser = uid => dispatch(getUser(uid));
+    const dispatchGetUser = async uid => await dispatch(getUser(uid));
+    const dispatchGetAllRooms = () => dispatch(getAllRooms());
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (!user) {
+                dispatchGetAllRooms();
                 navigation.navigate('Auth');
             } else {
-                dispatchGetUser(user.uid);
-                navigation.navigate('Home');
+                dispatchGetUser(user.uid)
+                    .then(() => {
+                        dispatchGetAllRooms();
+                    })
+                    .finally(() => navigation.navigate('Home'));
             }
         });
     }, []);
 
     return (
         <View style={styles.container}>
-            <ActivityIndicator size="large" />
-            <Text>Loading...</Text>
+            <View>
+                <ActivityIndicator size="large" />
+                <Text>Loading...</Text>
+            </View>
         </View>
     );
 };
