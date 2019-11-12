@@ -164,13 +164,16 @@ export const signUp = () => {
                         photoURL: '',
                         fullName,
                         phoneNumber: '',
-                        paypal: ''
+                        paypal: '',
+                        emailVerified: false
                     };
 
-                    db.collection('users')
+                    const response = await db
+                        .collection('users')
                         .doc(newUser.uid)
-                        .set(newUser)
-                        .then(data => console.log(data));
+                        .set(newUser);
+
+                    console.log(response);
 
                     dispatch({
                         type: 'LOGIN',

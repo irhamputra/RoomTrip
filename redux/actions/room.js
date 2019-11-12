@@ -1,4 +1,5 @@
 import db, { storage } from '../../config/firebase';
+import { imageBaseURL } from '../../constants/imageURL';
 
 export const updateTitle = title => {
     return { type: 'UPDATE_TITLE', payload: title };
@@ -40,23 +41,46 @@ export const cancelAddRoom = () => {
     return { type: 'CANCEL_ADD_ROOM' };
 };
 
+const getRoomID = id => {
+    return { type: 'GET_SINGLE_ROOM', payload: id };
+};
+
 export const saveRoom = () => {
     return async (dispatch, getState) => {
         try {
-            const { title, address, guest, price, description, blob } = getState().room;
+            const { title, address, guest, price, description, city, blob } = getState().room;
             const { uid } = getState().user;
 
-            const response = await storage.ref().child('images/');
+            if (blob) {
+                const ref = await storage.ref().child(`images/rooms/${uid}/room-${uid}`);
+                const result = await ref.put(blob);
+                const { fullPath } = await ref.getMetadata();
+                const encodeURL = encodeURIComponent(fullPath);
+                const newRoomURL = `${imageBaseURL}${encodeURL}?alt=media`;
 
-            const newRoom = {
-                title,
-                address,
-                guest,
-                price,
-                description
-            };
+                if (result.state === 'success') {
+                    const newRoom = {
+                        title,
+                        address,
+                        guest,
+                        city,
+                        price,
+                        description,
+                        photoURL: newRoomURL,
+                        verified: false
+                    };
 
-            const res = await db.collection('rooms').doc();
+                    const res = await db
+                        .collection('rooms')
+                        .doc(uid)
+                        .set(newRoom);
+
+                    console.log(res);
+                    dispatch({
+                        type: 'ADD ROOM'
+                    });
+                }
+            }
         } catch (e) {
             console.log(e);
         }
