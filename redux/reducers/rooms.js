@@ -1,6 +1,6 @@
 const initialState = {
     allRooms: [],
-    singleRoom: {},
+    singleRoom: {}
 };
 
 export const rooms = (state = initialState, action) => {

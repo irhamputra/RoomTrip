@@ -60,6 +60,7 @@ export const saveRoom = () => {
 
                 if (result.state === 'success') {
                     const newRoom = {
+                        id: uid,
                         title,
                         address,
                         guest,

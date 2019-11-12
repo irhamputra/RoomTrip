@@ -2,17 +2,18 @@ import firebase from 'firebase';
 import db from '../../config/firebase';
 
 export const getAllRooms = () => {
-    return async dispatch => {
+    return async (dispatch) => {
         try {
+            let res = [];
             const snapshot = await db.collection('rooms').get();
-            const rooms = await snapshot.forEach(room => {
-                return [...room.data()];
+            await snapshot.forEach(room => {
+                res.push({
+                    id: room.id,
+                    ...room.data()
+                });
             });
 
-            const documentSnapshot = snapshot.exists;
-            if (documentSnapshot) {
-                dispatch({ type: 'GET_ALL_ROOMS', payload: rooms });
-            }
+            dispatch({ type: 'GET_ALL_ROOMS', payload: res });
         } catch (e) {
             alert(e);
         }
