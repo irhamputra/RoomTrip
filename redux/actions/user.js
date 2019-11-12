@@ -31,6 +31,10 @@ export const updateBlobUser = blob => {
     return { type: 'UPDATE_BLOB_USER', payload: blob };
 };
 
+export const register = (fullName, email, password, confirmPassword) => {
+    return { type: 'REGISTER_USER', payload: { fullName, email, password, confirmPassword } };
+};
+
 export const saveProfile = () => {
     return async (dispatch, getState) => {
         try {
@@ -70,7 +74,7 @@ export const saveProfile = () => {
                         photoURL
                     });
             }
-            
+
             // should dispatch save profile
             console.log('dispatch save profile');
             dispatch({ type: 'SAVE_PROFILE' });
@@ -144,30 +148,37 @@ export const login = () => {
 export const signUp = () => {
     return async (dispatch, getState) => {
         try {
-            const { email, password, name } = getState().user;
-            const res = await firebase.auth().createUserWithEmailAndPassword(email, password);
-            console.log(res);
+            const {
+                registerUser: { fullName, email, password, confirmPassword }
+            } = getState().user;
 
-            if (res.user.uid) {
-                const newUser = {
-                    uid: res.user.uid,
-                    token: res.user.refreshToken,
-                    email,
-                    photoURL: '',
-                    name,
-                    phoneNumber: '',
-                    paypal: ''
-                };
+            if (password === confirmPassword) {
+                const res = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                console.log(res);
 
-                db.collection('users')
-                    .doc(newUser.uid)
-                    .set(newUser)
-                    .then(data => console.log(data));
+                if (res.user.uid) {
+                    const newUser = {
+                        uid: res.user.uid,
+                        token: res.user.refreshToken,
+                        email,
+                        photoURL: '',
+                        fullName,
+                        phoneNumber: '',
+                        paypal: ''
+                    };
 
-                dispatch({
-                    type: 'LOGIN',
-                    payload: getUser(res.user.uid)
-                });
+                    db.collection('users')
+                        .doc(newUser.uid)
+                        .set(newUser)
+                        .then(data => console.log(data));
+
+                    dispatch({
+                        type: 'LOGIN',
+                        payload: getUser(res.user.uid)
+                    });
+                }
+            } else {
+                alert('your password do not match');
             }
         } catch (e) {
             alert(e);
