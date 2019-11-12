@@ -54,7 +54,7 @@ const SignUp = ({ navigation }) => {
                         {({ handleChange, handleSubmit, values, errors, touched }) => (
                             <View>
                                 <Input
-                                    containerStyle={errors.password && touched.password ? { marginBottom: 0 } : { marginBottom: 10 }}
+                                    containerStyle={errors.fullName && touched.fullName ? { marginBottom: 0 } : { marginBottom: 10 }}
                                     label="Full Name"
                                     value={values.fullName}
                                     autoCorrect={false}
@@ -63,14 +63,14 @@ const SignUp = ({ navigation }) => {
                                     onChangeText={handleChange('fullName')}
                                 />
                                 {errors.fullName && touched.fullName ? (
-                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: "red" }}>
+                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: 'red' }}>
                                         <ErrorMessage name="fullName" />
                                     </Text>
                                 ) : null}
 
                                 <Input
                                     label="Email"
-                                    containerStyle={errors.password && touched.password ? { marginBottom: 0 } : { marginBottom: 10 }}
+                                    containerStyle={errors.email && touched.email ? { marginBottom: 0 } : { marginBottom: 10 }}
                                     value={values.email}
                                     autoCorrect={false}
                                     inputContainerStyle={errors.email && touched.email ? { borderColor: 'red' } : null}
@@ -79,7 +79,7 @@ const SignUp = ({ navigation }) => {
                                     onChangeText={handleChange('email')}
                                 />
                                 {errors.email && touched.email ? (
-                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: "red" }}>
+                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: 'red' }}>
                                         <ErrorMessage name="email" />
                                     </Text>
                                 ) : null}
@@ -95,13 +95,13 @@ const SignUp = ({ navigation }) => {
                                     secureTextEntry={true}
                                 />
                                 {errors.password && touched.password ? (
-                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: "red" }}>
+                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: 'red' }}>
                                         <ErrorMessage name="password" />
                                     </Text>
                                 ) : null}
 
                                 <Input
-                                    containerStyle={errors.password && touched.password ? { marginBottom: 0 } : { marginBottom: 10 }}
+                                    containerStyle={errors.confirmPassword && touched.confirmPassword ? { marginBottom: 0 } : { marginBottom: 10 }}
                                     label="Confirm Password"
                                     value={values.confirmPassword}
                                     autoCapitalize="none"
@@ -111,11 +111,10 @@ const SignUp = ({ navigation }) => {
                                     secureTextEntry={true}
                                 />
                                 {errors.confirmPassword && touched.confirmPassword ? (
-                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: "red" }}>
+                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: 'red' }}>
                                         <ErrorMessage name="confirmPassword" />
                                     </Text>
                                 ) : null}
-                                
 
                                 <Text style={{ textAlign: 'center', marginBottom: 20, color: 'darkgray' }}>
                                     By registering your account, you have agreed our Terms of Services and Privacy Policy

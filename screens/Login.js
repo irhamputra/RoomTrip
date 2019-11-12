@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { KeyboardAvoidingView, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Input, Button, Text } from 'react-native-elements';
-import { Formik } from 'formik';
-import { updateEmail, updatePassword, login } from '../redux/actions/user';
+import { ErrorMessage, Formik } from 'formik';
+import { login, signIn } from '../redux/actions/user';
+import * as Yup from 'yup';
 
 const Login = ({ navigation }) => {
-    const { email, password } = useSelector(state => state.user);
     const dispatch = useDispatch();
-    const dispatchEmail = email => dispatch(updateEmail(email));
-    const dispatchPassword = password => dispatch(updatePassword(password));
+    const dispatchSignIn = (email, password) => dispatch(signIn(email, password));
     const dispatchLogin = () => dispatch(login());
 
-    // TODO: How to read token from AsyncStorage in this case useEffect doesn't want to cleanup
-    useEffect(() => {}, []);
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Invalid email')
+            .required('Required'),
+        password: Yup.string()
+            .min(8, 'Password must be 8 characters')
+            .required('Required')
+    });
 
     return (
         <KeyboardAvoidingView style={{ flex: 1, paddingHorizontal: 30 }} behavior="padding" enabled>
@@ -27,32 +32,51 @@ const Login = ({ navigation }) => {
                             email: '',
                             password: ''
                         }}
-                        onSubmit={values => {
-                            dispatchEmail(values.email);
-                            dispatchPassword(values.password);
+                        validationSchema={validationSchema}
+                        onSubmit={({ email, password }) => {
+                            dispatchSignIn(email, password);
+
+                            if (email && password) {
+                                dispatchLogin();
+                            }
                         }}
                     >
-                        {({ handleChange, handleSubmit, values }) => (
+                        {({ handleChange, handleSubmit, values, errors, touched }) => (
                             <View>
                                 <Input
                                     label="Email"
                                     containerStyle={{ marginBottom: 10 }}
                                     value={values.email}
                                     autoCapitalize="none"
+                                    inputContainerStyle={errors.email && touched.email ? { borderColor: 'red' } : null}
                                     placeholder="user@address.com"
                                     onChangeText={handleChange('email')}
                                 />
+                                {errors.email && touched.email ? (
+                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: 'red' }}>
+                                        <ErrorMessage name="email" />
+                                    </Text>
+                                ) : null}
+
                                 <Input
-                                    containerStyle={{ marginBottom: 20 }}
+                                    containerStyle={errors.password && touched.password ? { marginBottom: 0 } : { marginBottom: 10 }}
                                     label="Password"
                                     value={values.password}
+                                    inputContainerStyle={errors.password && touched.password ? { borderColor: 'red' } : null}
                                     autoCapitalize="none"
                                     placeholder="Password"
                                     onChangeText={handleChange('password')}
                                     secureTextEntry={true}
                                 />
+                                {errors.password && touched.password ? (
+                                    <Text style={{ marginBottom: 10, marginHorizontal: 10, marginTop: 5, color: 'red' }}>
+                                        <ErrorMessage name="password" />
+                                    </Text>
+                                ) : null}
+
                                 <Button
                                     type="solid"
+                                    disabled={!values.email || !values.password}
                                     buttonStyle={{ backgroundColor: 'orange', width: '100%' }}
                                     onPress={handleSubmit}
                                     title="Login"

@@ -35,6 +35,10 @@ export const register = (fullName, email, password, confirmPassword) => {
     return { type: 'REGISTER_USER', payload: { fullName, email, password, confirmPassword } };
 };
 
+export const signIn = (email, password) => {
+    return { type: 'LOGIN_USER', payload: { email, password } };
+};
+
 export const saveProfile = () => {
     return async (dispatch, getState) => {
         try {
@@ -126,7 +130,9 @@ export const getUser = uid => {
 export const login = () => {
     return async (dispatch, getState) => {
         try {
-            const { email, password } = getState().user;
+            const {
+                loginUser: { email, password }
+            } = getState().user;
             const res = await firebase.auth().signInWithEmailAndPassword(email, password);
             await _storeData(res.user.refreshToken);
             dispatch({

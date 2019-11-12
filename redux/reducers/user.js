@@ -11,6 +11,9 @@ export const user = (state = {}, action) => {
 
         case 'REGISTER_USER':
             return { ...state, registerUser: action.payload };
+            
+        case 'LOGIN_USER':
+            return { ...state, loginUser: action.payload };
 
         case 'UPDATE_NAME':
             return { ...state, name: action.payload };
