@@ -4,8 +4,6 @@ import { AntDesign } from '@expo/vector-icons';
 import AccountStack from './AccountStack';
 import HomeStack from './HomeStack';
 import BookingsStack from './BookingsStack';
-import InboxStack from './InboxStack';
-import ChatStack from './ChatStack';
 
 export const TabNavigator = createBottomTabNavigator(
     {
