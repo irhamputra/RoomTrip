@@ -30,7 +30,7 @@ const SignUp = ({ navigation }) => {
         <KeyboardAvoidingView style={{ flex: 1, paddingHorizontal: 30 }} behavior="padding" enabled>
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-                    <Text h2 h2Style={{ fontWeight: 'bold', marginVertical: 20, textAlign: 'center' }}>
+                    <Text h2 h2Style={{ fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>
                         Register
                     </Text>
                     <Formik

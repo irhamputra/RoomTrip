@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
                             <View>
                                 <Input
                                     label="Email"
-                                    containerStyle={{ marginBottom: 10 }}
+                                    containerStyle={errors.email && touched.email ? { marginBottom: 0 } : { marginBottom: 10 }}
                                     value={values.email}
                                     autoCapitalize="none"
                                     inputContainerStyle={errors.email && touched.email ? { borderColor: 'red' } : null}
