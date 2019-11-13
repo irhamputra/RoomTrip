@@ -14,7 +14,6 @@ const Loading = ({ navigation }) => {
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (!user) {
-                dispatchGetAllRooms();
                 navigation.navigate('Auth');
             } else {
                 dispatchGetUser(user.uid)
