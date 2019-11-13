@@ -154,7 +154,6 @@ export const signUp = () => {
 
             if (password === confirmPassword) {
                 const res = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                console.log(res);
 
                 if (res.user.uid) {
                     const newUser = {
@@ -174,11 +173,6 @@ export const signUp = () => {
                         .set(newUser);
 
                     console.log(response);
-
-                    dispatch({
-                        type: 'LOGIN',
-                        payload: getUser(res.user.uid)
-                    });
                 }
             } else {
                 alert('your password do not match');

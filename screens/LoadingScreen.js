@@ -28,9 +28,10 @@ const Loading = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View>
+            <View style={{ alignItems: 'center' }}>
                 <ActivityIndicator size="large" />
-                <Text>Loading...</Text>
+                <Text>Please wait!</Text>
+                <Text>we are doing some magic...</Text>
             </View>
         </View>
     );

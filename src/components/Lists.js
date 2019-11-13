@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, SafeAreaView, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Dimensions, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Text } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 import Card from '../components/Cards';
 
 const Lists = () => {
-    const { name } = useSelector(state => state.user);
+    const { fullName } = useSelector(state => state.user);
 
     const mockDataCity = [
         {
@@ -39,11 +39,12 @@ const Lists = () => {
     return (
         <View>
             <View style={{ marginHorizontal: 15, marginVertical: 20 }}>
-                <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Look for new trip, {name}?</Text>
+                <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Look for new trip, {fullName}?</Text>
             </View>
             <FlatList
                 horizontal
                 style={{ paddingHorizontal: 5 }}
+                contentContainerStyle={{ paddingRight: 10 }}
                 showsHorizontalScrollIndicator={false}
                 data={mockDataCity}
                 keyExtractor={data => data.id.toString()}
@@ -58,7 +59,7 @@ const Lists = () => {
                                 overflow: 'hidden'
                             }}
                         >
-                            <Image source={{ uri: item.imageURL }} style={{ width: 200, height: 150 }} />
+                            <Image source={{ uri: item.imageURL }} style={{ width: Dimensions.get('window').width / 2.3, height: 150 }} />
                             <Text style={{ fontSize: 18, fontWeight: 'bold', margin: 10 }}>{item.city}</Text>
                         </View>
                     </TouchableOpacity>

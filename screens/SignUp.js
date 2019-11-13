@@ -8,8 +8,9 @@ import { signUp, register } from '../redux/actions/user';
 
 const SignUp = ({ navigation }) => {
     const dispatch = useDispatch();
-    const dispatchRegister = (fullName, email, password, confirmPassword) => dispatch(register(fullName, email, password, confirmPassword));
-    const dispatchSignUp = () => dispatch(signUp());
+    const dispatchRegister = async (fullName, email, password, confirmPassword) =>
+        await dispatch(register(fullName, email, password, confirmPassword));
+    const dispatchSignUp = async () => await dispatch(signUp());
 
     const validationSchema = Yup.object().shape({
         fullName: Yup.string()
@@ -42,13 +43,13 @@ const SignUp = ({ navigation }) => {
                         }}
                         validationSchema={validationSchema}
                         onSubmit={({ fullName, email, password, confirmPassword }) => {
-                            dispatchRegister(fullName, email, password, confirmPassword);
-
-                            if (fullName && email && password && confirmPassword) {
-                                dispatchSignUp();
-                            } else {
-                                Alert.alert('Register failed', 'Please check your field', [{ text: 'Ok', onPress: () => null }]);
-                            }
+                            dispatchRegister(fullName, email, password, confirmPassword).then(() => {
+                                if (fullName && email && password && confirmPassword) {
+                                    dispatchSignUp().then(() => navigation.navigate('Home'));
+                                } else {
+                                    Alert.alert('Register failed', 'Please check your field', [{ text: 'Ok', onPress: () => null }]);
+                                }
+                            });
                         }}
                     >
                         {({ handleChange, handleSubmit, values, errors, touched }) => (
@@ -101,7 +102,9 @@ const SignUp = ({ navigation }) => {
                                 ) : null}
 
                                 <Input
-                                    containerStyle={errors.confirmPassword && touched.confirmPassword ? { marginBottom: 0 } : { marginBottom: 10 }}
+                                    containerStyle={
+                                        errors.confirmPassword && touched.confirmPassword ? { marginBottom: 0 } : { marginBottom: 10 }
+                                    }
                                     label="Confirm Password"
                                     value={values.confirmPassword}
                                     autoCapitalize="none"
