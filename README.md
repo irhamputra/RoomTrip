@@ -12,8 +12,8 @@ at any university in Germany.
 - [x] Save PayPal account to database
 - [x] Image Preview before uploading
 - [ ] Email verification
-- [ ] Save room to storage and database
-- [ ] Get data from database
+- [x] Save room to storage and database
+- [x] Get data from database
 - [ ] Create Booking feature
 - [ ] Chat feature
 - [ ] Create QRCode for checkin feature
