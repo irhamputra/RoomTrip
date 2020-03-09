@@ -74,7 +74,6 @@ export const saveProfile = () => {
             }
 
             // should dispatch save profile
-            console.log('dispatch save profile');
             dispatch({ type: 'SAVE_PROFILE' });
         } catch (e) {
             console.log(e);
@@ -117,7 +116,7 @@ export const getUser = uid => {
                 .collection('users')
                 .doc(uid)
                 .get();
-            const documentSnapshot = await user.exists;
+            const documentSnapshot = user.exists;
             if (documentSnapshot) {
                 dispatch({ type: 'GET_USER', payload: user.data() });
             }
@@ -154,6 +153,8 @@ export const signUp = () => {
 
             if (password === confirmPassword) {
                 const res = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+                await res.user.sendEmailVerification();
 
                 if (res.user.uid) {
                     const newUser = {

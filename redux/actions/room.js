@@ -83,45 +83,17 @@ export const saveRoom = () => {
                 };
 
                 if (result.state === 'success') {
-                    // if photoURL include http is old photos
-                    if (photoURL.includes('https://firebasestorage')) {
-                        const res = await db
+                    if (photoURL.includes(newRoomURL)) {
+                        await db
                             .collection('rooms')
                             .doc(uid)
                             .update(newRoom);
-                        console.log(res);
-
-                        const userRes = await db
-                            .collection('users')
-                            .doc(uid)
-                            .update({
-                                rooms: [{
-                                    ...newRoom
-                                }]
-                            });
-
-                        console.log('user res', userRes);
                         dispatch({ type: 'UPDATE_OLD_PHOTO' });
                     } else {
-                        const res = await db
+                        await db
                             .collection('rooms')
                             .doc(uid)
                             .set(newRoom);
-
-                        console.log(res);
-
-                        const userRes = await db
-                            .collection('users')
-                            .doc(uid)
-                            .update({
-                                rooms: [
-                                    {
-                                        ...newRoom
-                                    }
-                                ]
-                            });
-
-                        console.log('user res', userRes);
                         await dispatch({ type: 'ADD ROOM' });
                     }
                 }
@@ -138,25 +110,16 @@ export const saveRoom = () => {
                     photoURL,
                     verified: false
                 };
-                const res = await db
+                await db
                     .collection('rooms')
                     .doc(uid)
                     .update(updateRoom);
-
-                const userRes = await db
+                await db
                     .collection('users')
                     .doc(uid)
                     .update({
-                        rooms: [
-                            {
-                                ...updateRoom
-                            }
-                        ]
+                        rooms: [{ ...updateRoom }]
                     });
-
-                console.log('user res', userRes);
-
-                console.log(res);
                 await dispatch({ type: 'UPDATE_ROOM_WITHOUT_BLOB' });
             }
         } catch (e) {
